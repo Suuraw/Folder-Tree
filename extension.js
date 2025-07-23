@@ -15,9 +15,6 @@ function activate(context) {
     'Congratulations, your extension "folder-tree-generator" is now active!'
   );
 
-  // Show input panel immediately when extension activates
-  //   showInputPanel(context);
-
   // The command has been defined in the package.json file
   const disposable = vscode.commands.registerCommand(
     "helloworld.helloWorld",
@@ -55,7 +52,9 @@ function showInputPanel(context) {
       switch (message.command) {
         case "run":
           console.log("Processing MD tree structure...");
+          // When the run command is received, we close the panel and run the creation logic.
           handleMDTreeCreation(message.mdTree);
+          panel.dispose();
           return;
 
         case "close":
@@ -96,7 +95,7 @@ async function handleMDTreeCreation(mdTree) {
     const workspacePath = workspaceFolder.uri.fsPath;
     console.log(`Creating structure in: ${workspacePath}`);
 
-    // Parse the MD tree structure
+    // Parse the MD tree structure with the new robust logic
     const parsedStructure = parseMDTree(mdTree);
     console.log("Parsed structure:", JSON.stringify(parsedStructure, null, 2));
 
@@ -120,109 +119,88 @@ async function handleMDTreeCreation(mdTree) {
 }
 
 /**
- * Parses markdown tree structure using regex and identifies nesting
- * @param {string} mdTree - Raw markdown tree text
- * @returns {Array} Parsed tree structure with paths and types
+ * **[REWRITTEN & ROBUST]**
+ * Parses a string representing a file tree into a structured array of objects.
+ * This new logic is more robust and handles complex/inconsistent indentation.
+ *
+ * @param {string} mdTree - The string containing the file tree.
+ * @returns {Array<Object>} An array where each object represents a file or folder.
  */
 function parseMDTree(mdTree) {
   const lines = mdTree.split("\n").filter((line) => line.trim() !== "");
   const structure = [];
-  const pathStack = [];
 
-  // Regex patterns for different tree formats
-  const patterns = {
-    // Standard tree format: ├──, └──, │
-    standard: /^(\s*)(├──|└──|│\s*├──|│\s*└──|\|--|\+--|--)?\s*(.+)$/,
-    // Simple indentation format
-    indent: /^(\s+)(.+)$/,
-    // Bullet points
-    bullet: /^(\s*)([-*+])\s*(.+)$/,
-    // Numbered lists
-    numbered: /^(\s*)(\d+\.)\s*(.+)$/,
-  };
+  // parentStack holds the names of the parent folders. e.g., ['src', 'components']
+  const parentStack = [];
+  // indentStack holds the indentation length for each level in parentStack.
+  const indentStack = [-1]; // Root level has -1 indentation.
 
-  for (let line of lines) {
-    line = line.replace(/\r/g, ""); // Remove carriage returns
+  // This regex greedily captures all prefix characters (whitespace, tree symbols)
+  // in the first group, leaving the clean content in the second group.
+  const lineParser = /^([ │├└─\t\v\f\r\n\+*\d\.-]*)(.*)/;
 
-    if (!line.trim()) continue;
+  for (const line of lines) {
+    const match = line.match(lineParser);
+    if (!match) continue;
 
-    let match = null;
-    let indentLevel = 0;
-    let content = "";
-
-    // Try different patterns
-    if ((match = line.match(patterns.standard))) {
-      const indent = match[1] || "";
-      const symbol = match[2] || "";
-      content = match[3].trim();
-
-      // Calculate indent level based on spaces and symbols
-      indentLevel = Math.floor(indent.length / 2);
-      if (symbol.includes("│")) indentLevel++;
-    } else if ((match = line.match(patterns.bullet))) {
-      indentLevel = Math.floor(match[1].length / 2);
-      content = match[3].trim();
-    } else if ((match = line.match(patterns.numbered))) {
-      indentLevel = Math.floor(match[1].length / 2);
-      content = match[3].trim();
-    } else if ((match = line.match(patterns.indent))) {
-      indentLevel = Math.floor(match[1].length / 2);
-      content = match[2].trim();
-    } else {
-      // No indentation, treat as root level
-      content = line.trim();
-      indentLevel = 0;
-    }
+    const prefix = match[1] || "";
+    let content = (match[2] || "").trim();
 
     if (!content) continue;
 
-    // Clean up content - remove tree symbols and extra spaces
-    content = content.replace(/^[├└│\-\+\|]*\s*/, "").trim();
+    // The raw length of the prefix is our indentation metric.
+    // This is more reliable than counting spaces or detecting indent size.
+    const indentLength = prefix.length;
 
-    // Skip empty content
-    if (!content) continue;
-
-    // Adjust path stack based on current indent level
-    while (pathStack.length > indentLevel) {
-      pathStack.pop();
+    // Pop from the stacks until we find the correct parent level.
+    // The parent is the last item in the stack with less indentation.
+    while (indentLength <= indentStack[indentStack.length - 1]) {
+      parentStack.pop();
+      indentStack.pop();
     }
 
-    // Determine if it's a file or folder
+    // The current item's level is its position in the hierarchy.
+    const level = parentStack.length;
+
+    // Determine type and get a clean name for the path
     const isFile = hasFileExtension(content);
+    const type = isFile ? "file" : "folder";
+    const cleanName = content.endsWith("/") ? content.slice(0, -1) : content;
 
-    // Build full path
-    const fullPath =
-      pathStack.length > 0 ? path.join(...pathStack, content) : content;
+    // Build the full path using the current parent stack
+    const fullPath = path.join(...parentStack, cleanName);
 
-    // Add to structure
     structure.push({
       name: content,
       path: fullPath,
-      type: isFile ? "file" : "folder",
-      level: indentLevel,
+      type: type,
+      level: level,
     });
 
-    // Add to path stack if it's a folder
+    // If it's a folder, add it to the stacks so it can be a parent
+    // for subsequent, more indented lines.
     if (!isFile) {
-      pathStack[indentLevel] = content;
+      parentStack.push(cleanName);
+      indentStack.push(indentLength);
     }
-
-    console.log(
-      `Parsed: ${content} (level: ${indentLevel}, type: ${
-        isFile ? "file" : "folder"
-      }, path: ${fullPath})`
-    );
   }
 
   return structure;
 }
 
 /**
- * Determines if a name represents a file based on file extension
+ * Determines if a name represents a file based on a comprehensive list of extensions.
+ * Also handles names ending in '/' as folders.
  * @param {string} name - The file/folder name
  * @returns {boolean} True if it's a file
  */
 function hasFileExtension(name) {
+  // If it explicitly ends with a slash, it's a folder.
+  if (name.endsWith("/")) {
+    return false;
+  }
+
+  // List of common file extensions from the original extension code.
   const fileExtensions = [
     ".js",
     ".ts",
@@ -278,6 +256,7 @@ function hasFileExtension(name) {
     ".7z",
   ];
 
+  // Check if the name ends with any of the known extensions.
   return fileExtensions.some((ext) =>
     name.toLowerCase().endsWith(ext.toLowerCase())
   );
@@ -289,31 +268,27 @@ function hasFileExtension(name) {
  * @param {Array} structure - Parsed structure array
  */
 async function createFolderStructure(basePath, structure) {
-  // Sort structure by path depth to create parent folders first
-  structure.sort((a, b) => a.level - b.level);
-
   for (const item of structure) {
     const fullPath = path.join(basePath, item.path);
 
     try {
       if (item.type === "folder") {
-        // Create directory
         if (!fs.existsSync(fullPath)) {
-          fs.mkdirSync(fullPath, { recursive: true });
+          fs.mkdirSync(fullPath, {
+            recursive: true,
+          });
           console.log(`✅ Created folder: ${item.path}`);
         } else {
           console.log(`📁 Folder already exists: ${item.path}`);
         }
       } else {
-        // Create file
+        // item.type is "file"
         const fileDir = path.dirname(fullPath);
-
-        // Ensure parent directory exists
         if (!fs.existsSync(fileDir)) {
-          fs.mkdirSync(fileDir, { recursive: true });
+          fs.mkdirSync(fileDir, {
+            recursive: true,
+          });
         }
-
-        // Create file if it doesn't exist
         if (!fs.existsSync(fullPath)) {
           fs.writeFileSync(fullPath, "", "utf8");
           console.log(`✅ Created file: ${item.path}`);
@@ -402,7 +377,21 @@ function getWebviewContent() {
                 outline: 1px solid var(--vscode-focusBorder);
                 border-color: var(--vscode-focusBorder);
             }
-            
+            .copy-btn {
+                background: var(--vscode-button-secondaryBackground);
+                color: var(--vscode-button-secondaryForeground);
+                border: 1px solid var(--vscode-button-border);
+                padding: 0.25rem 0.75rem;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: 500;
+                transition: all 0.2s ease;
+            }
+
+            .copy-btn:hover {
+                background: var(--vscode-button-secondaryHoverBackground);
+            }
             .example {
                 background-color: var(--vscode-textBlockQuote-background);
                 border-left: 4px solid var(--vscode-textBlockQuote-border);
@@ -416,6 +405,9 @@ function getWebviewContent() {
                 margin-top: 0;
                 margin-bottom: 10px;
                 color: var(--vscode-foreground);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
             
             .example pre {
@@ -426,6 +418,7 @@ function getWebviewContent() {
                 font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
                 font-size: 12px;
                 margin: 10px 0;
+                white-space: pre;
             }
             
             .button-group {
@@ -498,72 +491,47 @@ function getWebviewContent() {
                 <textarea 
                     id="mdTreeInput" 
                     name="mdTreeInput" 
-                    placeholder="Paste your folder tree here...
-
-Example formats supported:
-├── src/
-│   ├── components/
-│   │   ├── Header.jsx
-│   │   └── Footer.jsx
-│   ├── utils/
-│   │   └── helpers.js
-│   └── index.js
-├── public/
-│   └── index.html
-└── package.json
-
-Or simple indentation:
-  src/
-    components/
-      Header.jsx
-      Footer.jsx
-    utils/
-      helpers.js
-    index.js
-  public/
-    index.html
-  package.json
-
-Or bullet points:
-- src/
-  - components/
-    - Header.jsx
-    - Footer.jsx
-  - utils/
-    - helpers.js
-  - index.js
-- public/
-  - index.html
-- package.json"
+                    placeholder="Paste your folder tree here..."
                 ></textarea>
             </div>
             
             <div class="example">
-                <h3>📋 Supported Formats:</h3>
+                <h3>
+                    <span>📋 Supported Formats:</span>
+                </h3>
                 <p>The extension automatically detects and supports various tree formats:</p>
                 
-                <p><strong>1. Standard Tree Format:</strong></p>
-                <pre>├── folder/
+                <h3>
+                    <span><strong>1. Standard Tree Format:</strong></span>
+                    <button class="copy-btn" data-target="format-code-1">Copy</button>
+                </h3>
+                <pre id="format-code-1">├── folder/
 │   ├── subfolder/
 │   │   └── file.txt
 │   └── another-file.js
 └── root-file.md</pre>
                 
-                <p><strong>2. Simple Indentation:</strong></p>
-                <pre>folder/
+                <h3>
+                    <span><strong>2. Simple Indentation:</strong></span>
+                    <button class="copy-btn" data-target="format-code-2">Copy</button>
+                </h3>
+                <pre id="format-code-2">folder/
     subfolder/
         file.txt
     another-file.js
 root-file.md</pre>
                 
-                <p><strong>3. Bullet Points:</strong></p>
-                <pre>- folder/
+                <h3>
+                    <span><strong>3. Bullet Points:</strong></span>
+                    <button class="copy-btn" data-target="format-code-3">Copy</button>
+                </h3>
+                <pre id="format-code-3">- folder/
   - subfolder/
     - file.txt
   - another-file.js
 - root-file.md</pre>
                 
-                <p><strong>📝 Notes:</strong></p>
+                <h3><strong>📝 Notes:</strong></h3>
                 <ul>
                     <li>Files are detected by their extensions (.js, .html, .css, etc.)</li>
                     <li>Folders can end with "/" or be detected by lack of extension</li>
@@ -589,50 +557,26 @@ root-file.md</pre>
             const runButton = document.getElementById('runButton');
             const closeButton = document.getElementById('closeButton');
             
-            // Focus on textarea
             mdTreeInput.focus();
             
-            // Enable/disable run button based on input
             mdTreeInput.addEventListener('input', () => {
-                const hasContent = mdTreeInput.value.trim().length > 0;
-                runButton.disabled = !hasContent;
+                runButton.disabled = mdTreeInput.value.trim().length === 0;
             });
             
-            // Handle run button click
             runButton.addEventListener('click', () => {
                 const mdTree = mdTreeInput.value.trim();
+                if (!mdTree) return;
                 
-                if (!mdTree) {
-                    alert('Please paste your markdown tree structure!');
-                    mdTreeInput.focus();
-                    return;
-                }
-                
-                // Disable button during processing
                 runButton.disabled = true;
                 runButton.textContent = '⏳ Creating...';
                 
-                // Send data to extension
-                vscode.postMessage({
-                    command: 'run',
-                    mdTree: mdTree
-                });
-                
-                // Re-enable after a delay
-                setTimeout(() => {
-                    runButton.disabled = false;
-                    runButton.textContent = '🚀 Create Structure';
-                }, 3000);
+                vscode.postMessage({ command: 'run', mdTree: mdTree });
             });
             
-            // Handle close button click
             closeButton.addEventListener('click', () => {
-                vscode.postMessage({
-                    command: 'close'
-                });
+                vscode.postMessage({ command: 'close' });
             });
             
-            // Handle Ctrl+Enter to run
             mdTreeInput.addEventListener('keydown', (e) => {
                 if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
                     e.preventDefault();
@@ -641,8 +585,25 @@ root-file.md</pre>
                     }
                 }
             });
+
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const targetId = event.currentTarget.dataset.target;
+                    const codeElement = document.getElementById(targetId);
+                    const textToCopy = codeElement.textContent;
+
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const originalText = button.textContent;
+                        button.textContent = 'Copied!';
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                        }, 1500);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                });
+            });
             
-            // Initial button state
             runButton.disabled = true;
         </script>
     </body>
