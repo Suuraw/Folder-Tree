@@ -35,7 +35,7 @@ Here’s a quick look at the repo layout:
 1. **Clone the repo**:
 
    ```bash
-   git clone https://github.com/YOUR-USERNAME/Folder-Tree.git
+   git clone https://github.com/Suuraw/Folder-Tree.git
    cd Folder-Tree
    ```
 
