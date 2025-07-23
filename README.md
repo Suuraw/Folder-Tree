@@ -123,7 +123,7 @@ Have a feature idea or spotted a bug? We'd love your help!
 - 💡 Suggest features or improvements the same way
 - 🔧 Want to contribute? Fork the repo and submit a PR — clear commits and concise messages appreciated!
 
-Check the [Contribution Guide](https://github.com/Suuraw/Folder-Tree/blob/main/CONTRIBUTING.md) if available.
+Check the [Contribution Guide](https://github.com/Suuraw/Folder-Tree/blob/main/CONTRIBUTING.md).
 
 ---
 

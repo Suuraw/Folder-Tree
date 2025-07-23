@@ -2,16 +2,15 @@
   "name": "folder-tree",
   "displayName": "Folder Tree",
   "description": "Quickly generate project folder and file structures from simple text outlines.",
-  "icon": "images/icon.png",
-  "publisher": "Suuraw",
   "version": "0.0.1",
+  "publisher": "Suuraw",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.102.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
   "main": "./extension.js",
   "contributes": {
     "commands": [
@@ -33,5 +32,13 @@
     "eslint": "^9.25.1",
     "@vscode/test-cli": "^0.0.11",
     "@vscode/test-electron": "^2.5.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Suuraw/Folder-Tree"
+  },
+  "bugs": {
+    "url": "https://github.com/Suuraw/Folder-Tree/issues"
+  },
+  "homepage": "https://github.com/Suuraw/Folder-Tree#readme"
 }
