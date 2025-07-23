@@ -1,5 +1,9 @@
 # 📁 Folder Tree
 
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/Suuraw.folder-tree)](https://marketplace.visualstudio.com/items?itemName=Suuraw.folder-tree)
+[![Downloads](https://img.shields.io/visual-studio-marketplace/d/Suuraw.folder-tree)](https://marketplace.visualstudio.com/items?itemName=Suuraw.folder-tree)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Quickly generate project folder and file structures from simple text outlines in VS Code. Stop manually creating files and folders one by one — define your entire project architecture in a single file and scaffold it instantly.
 
 ![Demo of Folder Tree](https://raw.githubusercontent.com/Suuraw/Folder-Tree/main/images/User-guide-demo.gif)
