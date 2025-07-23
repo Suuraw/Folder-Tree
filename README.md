@@ -2,7 +2,7 @@
 
 Quickly generate project folder and file structures from simple text outlines in VS Code. Stop manually creating files and folders one by one and start defining your entire project architecture in a single file.
 
-![Demo of Folder Tree](https://raw.githubusercontent.com/your-github-username/folder-tree/main/demo.gif)
+![Demo of Folder Tree](https://raw.githubusercontent.com/Suuraw/Folder-Tree/main/User-guide-demo.gif)
 
 ---
 
@@ -115,7 +115,7 @@ folderTree.ignoreFileName: The name of the file containing the structure definit
 ## 🤝 Contributing
 
 Found a bug or have a feature request?  
-Please open an issue or submit a pull request on our [GitHub Repository](https://github.com/your-github-username/folder-tree).
+Please open an issue or submit a pull request on our [GitHub Repository](https://github.com/Suuraw/Folder-Tree).
 
 ---
 

@@ -54,7 +54,7 @@ function showInputPanel(context) {
           console.log("Processing MD tree structure...");
           // When the run command is received, we close the panel and run the creation logic.
           handleMDTreeCreation(message.mdTree);
-          //   panel.dispose();
+          panel.dispose();
           return;
 
         case "close":
