@@ -2,7 +2,7 @@
   "name": "folder-tree",
   "displayName": "Folder Tree",
   "description": "Quickly generate project folder and file structures from simple text outlines.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "Suuraw",
   "icon": "images/icon.png",
   "engines": {
