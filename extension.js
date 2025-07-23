@@ -17,7 +17,7 @@ function activate(context) {
 
   // The command has been defined in the package.json file
   const disposable = vscode.commands.registerCommand(
-    "helloworld.helloWorld",
+    "folder-tree.generate",
     function () {
       console.log("Command executed - showing input panel");
       showInputPanel(context);
@@ -54,7 +54,7 @@ function showInputPanel(context) {
           console.log("Processing MD tree structure...");
           // When the run command is received, we close the panel and run the creation logic.
           handleMDTreeCreation(message.mdTree);
-          panel.dispose();
+          //   panel.dispose();
           return;
 
         case "close":
@@ -138,7 +138,6 @@ function parseMDTree(mdTree) {
   // This regex greedily captures all prefix characters (whitespace, tree symbols)
   // in the first group, leaving the clean content in the second group.
   const lineParser = /^([ │├└─\t\v\f\r\n\+*\d\.-]*)(.*)/;
-
   for (const line of lines) {
     const match = line.match(lineParser);
     if (!match) continue;

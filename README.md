@@ -1,65 +1,124 @@
-# helloworld README
+# 📁 Folder Tree
 
-This is the README for your extension "helloworld". After writing up a brief description, we recommend including the following sections.
+Quickly generate project folder and file structures from simple text outlines in VS Code. Stop manually creating files and folders one by one and start defining your entire project architecture in a single file.
 
-## Features
-
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+![Demo of Folder Tree](https://raw.githubusercontent.com/your-github-username/folder-tree/main/demo.gif)
 
 ---
 
-## Working with Markdown
+## 🚀 Features
 
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+✅ **Rapid Scaffolding** – Generate complex directory trees in your workspace in seconds.  
+✅ **Multiple Input Formats** – Use the format that feels most natural to you:
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
+- **Markdown Tree** (`|--`)
+- **Indented Text** (spaces or tabs)
+- **Bullet Points** (`*` or `-`)  
+  ✅ **Simple & Intuitive** – Write your structure, run one command, and you're done.
 
-## For more information
+---
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+## 🛠️ How to Use
 
-**Enjoy!**
+1. **Install** the "Folder Tree" extension from the [VS Code Marketplace](https://marketplace.visualstudio.com/).
+2. **Create a new file** in your workspace root (e.g., `.tree`).
+3. **Define your structure** in one of the supported formats (see below).  
+   ➤ **To define a folder**, end its name with a forward slash (`/`).
+4. Open the **Command Palette** (`Ctrl+Shift+P` or `Cmd+Shift+P`).
+5. Run the command: **`Folder Tree: Generate Structure`**.
+6. Boom 💥 — your folders and files are scaffolded instantly.
+
+---
+
+## ✏️ Supported Formats
+
+### 1. Markdown Tree Format (`|--`)
+
+<pre>
+.
+|-- src/
+|   |-- components/
+|   |   |-- Button.jsx
+|   |   |-- Modal.jsx
+|   |-- hooks/
+|   |-- pages/
+|       |-- Home.jsx
+|       |-- About.jsx
+|-- public/
+|   |-- index.html
+|-- package.json
+|-- .gitignore
+</pre>
+
+---
+
+### 2. Indentation Format (spaces or tabs)
+
+<pre>
+src/
+  components/
+    Button.jsx
+    Modal.jsx
+  hooks/
+  pages/
+    Home.jsx
+    About.jsx
+public/
+  index.html
+package.json
+.gitignore
+</pre>
+
+---
+
+### 3. Bullet Point Format (`*` or `-`)
+
+<pre>
+* src/
+  * components/
+    * Button.jsx
+    * Modal.jsx
+  * hooks/
+  * pages/
+    * Home.jsx
+    * About.jsx
+* public/
+  * index.html
+* package.json
+* .gitignore
+</pre>
+
+---
+
+## ⚙️ Extension Settings
+
+You can configure Folder Tree in your `settings.json`:
+
+<pre>
+folderTree.overwriteExisting: When set to true, the extension will overwrite existing files with the same name. Defaults to false.
+
+folderTree.ignoreFileName: The name of the file containing the structure definition, to prevent it from trying to create itself. Defaults to .tree.
+</pre>
+
+---
+
+## 🧾 Release Notes
+
+### 1.0.0
+
+- Initial release of **Folder Tree**.
+- Supports Markdown Tree, Indentation, and Bullet Point formats.
+- Added command: `Folder Tree: Generate Structure`.
+
+---
+
+## 🤝 Contributing
+
+Found a bug or have a feature request?  
+Please open an issue or submit a pull request on our [GitHub Repository](https://github.com/your-github-username/folder-tree).
+
+---
+
+## 📄 License
+
+This extension is licensed under the MIT License.
