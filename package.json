@@ -2,7 +2,7 @@
   "name": "generate-folder-tree",
   "displayName": "Generate Folder Tree",
   "description": "Materialize your project's architecture in seconds. This extension understands text-based file trees, allowing you to instantly generate a complete folder structure from sources like LLM suggestions, or manual drawn outlines which depicts folder structure",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "publisher": "Suuraw",
   "icon": "images/icon.ico",
   "engines": {
