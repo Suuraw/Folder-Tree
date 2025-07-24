@@ -1,7 +1,11 @@
 # 📁 Generate Folder Tree
 
-[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/Suuraw.generate-folder-tree)](https://marketplace.visualstudio.com/items?itemName=Suuraw.generate-folder-tree)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+<div align="center">
+
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/Suuraw.generate-folder-tree?style=for-the-badge&label=Marketplace)](https://marketplace.visualstudio.com/items?itemName=Suuraw.generate-folder-tree)
+[![License](https://img.shields.io/github/license/Suuraw/Generate-Folder-Tree?style=for-the-badge&color=blue)](LICENSE)
+
+</div>
 
 > 🚀 **Quickly generate project folders and files right inside VS Code**  
 > ✏️ Just **paste** or **draw your structure** in the panel  
@@ -26,13 +30,12 @@
 
 ## 🛠️ How to Use
 
-1. **Install** the "Generate Folder Tree" extension from the [VS Code Marketplace](https://marketplace.visualstudio.com/).
-2. **Create a new file** in your workspace root (e.g., `.tree`).
-3. **Define your structure** in one of the supported formats (see below).  
-   ➤ To define a **folder**, end its name with a slash (`/`).
-4. Open the **Command Palette** (`Ctrl+Shift+P` or `Cmd+Shift+P`).
-5. Run the command: **`Generate Folder Tree: Create from Text Outline`**.
-6. Boom 💥 — your folders and files are scaffolded instantly.
+1.  **Install** the [Generate Folder Tree](https://marketplace.visualstudio.com/items?itemName=Suuraw.generate-folder-tree) extension.
+2.  **Open an empty folder** in VS Code. This will be the root directory.
+3.  Open the **Command Palette** (`Ctrl+Shift+P` or `Cmd+Shift+P`).
+4.  Type and select the command: **`Generate Folder Tree`**.
+5.  An input panel will appear at the top. **Type or paste your structure** in this panel.
+6.  Press **`Enter`**. The structure is instantly created. 💥
 
 ---
 
@@ -129,6 +132,20 @@ Have a feature idea or spotted a bug? We'd love your help!
 - 🔧 Want to contribute? Fork the repo and submit a PR — clear commits and concise messages appreciated!
 
 Check the [Contribution Guide](https://github.com/Suuraw/Generate-Folder-Tree/blob/main/CONTRIBUTING.md).
+
+---
+
+## 💝 Support
+
+<div align="center">
+
+_Love this extension?_ Help it grow by showing your support!
+
+[![Star on GitHub](https://img.shields.io/badge/⭐_Star_on_GitHub-black?style=for-the-badge&logo=github)](https://github.com/Suuraw/Generate-Folder-Tree)
+[![Rate on Marketplace](https://img.shields.io/badge/📝_Rate_on_Marketplace-blue?style=for-the-badge&logo=visualstudiocode)](https://marketplace.visualstudio.com/items?itemName=Suuraw.generate-folder-tree)
+[![Share on Twitter](https://img.shields.io/badge/🐦_Share_on_Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/intent/tweet?text=Scaffold%20project%20structures%20instantly%20in%20%40vscode%20with%20the%20'Generate%20Folder%20Tree'%20extension!&url=https://marketplace.visualstudio.com/items?itemName=Suuraw.generate-folder-tree)
+
+</div>
 
 ---
 
