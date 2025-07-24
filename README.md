@@ -34,7 +34,7 @@
 2.  **Open an empty folder** in VS Code. This will be the root directory.
 3.  Open the **Command Palette** (`Ctrl+Shift+P` or `Cmd+Shift+P`).
 4.  Type and select the command: **`Generate Folder Tree`**.
-5.  An input panel will appear at the top. **Type or paste your structure** in this panel.
+5.  An input panel will appear. **Type or paste your structure** in this panel.
 6.  Press **`Enter`**. The structure is instantly created. 💥
 
 ---
