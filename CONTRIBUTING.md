@@ -1,6 +1,6 @@
-# 🤝 Contributing to Folder Tree
+# 🤝 Contributing to Generate Folder Tree
 
-Thank you for your interest in improving **Folder Tree**! Whether it’s a bug fix, new feature, or better docs — every contribution counts. Let’s build something awesome together. 🚀
+Thank you for your interest in improving **Generate Folder Tree**! Whether it’s a bug fix, new feature, or better docs — every contribution counts. Let’s build something awesome together. 🚀
 
 ---
 
@@ -35,8 +35,8 @@ Here’s a quick look at the repo layout:
 1. **Clone the repo**:
 
    ```bash
-   git clone https://github.com/Suuraw/Folder-Tree.git
-   cd Folder-Tree
+   git clone https://github.com/Suuraw/Generate-Folder-Tree.git
+   cd Generate-Folder-Tree
    ```
 
 2. **Install dependencies**:

@@ -1,12 +1,13 @@
 # 📁 Folder Tree
 
-[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/Suuraw.folder-tree)](https://marketplace.visualstudio.com/items?itemName=Suuraw.folder-tree)
-[![Downloads](https://img.shields.io/visual-studio-marketplace/d/Suuraw.folder-tree)](https://marketplace.visualstudio.com/items?itemName=Suuraw.folder-tree)
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/Suuraw.generate-folder-tree)](https://marketplace.visualstudio.com/items?itemName=Suuraw.generate-folder-tree)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Quickly generate project folder and file structures from simple text outlines in VS Code. Stop manually creating files and folders one by one — define your entire project architecture in a single file and scaffold it instantly.
+> 🚀 **Quickly generate project folders and files right inside VS Code**  
+> ✏️ Just **paste** or **draw your structure** in the panel  
+> ⚡️ Instantly create your entire project layout — no more clicking "New File" or "New Folder" again and again.
 
-![Demo of Folder Tree](https://raw.githubusercontent.com/Suuraw/Folder-Tree/main/images/User-guide-demo.gif)
+![Demo of Folder Tree](https://raw.githubusercontent.com/Suuraw/Generate-Folder-Tree/main/images/Demo.gif)
 
 ---
 
@@ -30,16 +31,16 @@ Quickly generate project folder and file structures from simple text outlines in
 3. **Define your structure** in one of the supported formats (see below).  
    ➤ To define a **folder**, end its name with a slash (`/`).
 4. Open the **Command Palette** (`Ctrl+Shift+P` or `Cmd+Shift+P`).
-5. Run the command: **`Folder Tree: Generate Structure`**.
+5. Run the command: **`Generate Folder Tree: Create from Text Outline`**.
 6. Boom 💥 — your folders and files are scaffolded instantly.
 
 ---
 
-## ✏️ Supported Formats
+## ✏️ Supported Formats: (Copy & Test Below)
 
 ### 1. Markdown Tree Format (`|--`)
 
-<pre>
+```text
 .
 |-- src/
 |   |-- components/
@@ -53,13 +54,13 @@ Quickly generate project folder and file structures from simple text outlines in
 |   |-- index.html
 |-- package.json
 |-- .gitignore
-</pre>
+```
 
 ---
 
 ### 2. Indentation Format (spaces or tabs)
 
-<pre>
+```text
 src/
   components/
     Button.jsx
@@ -72,13 +73,13 @@ public/
   index.html
 package.json
 .gitignore
-</pre>
+```
 
 ---
 
 ### 3. Bullet Point Format (`*` or `-`)
 
-<pre>
+```text
 * src/
   * components/
     * Button.jsx
@@ -91,7 +92,7 @@ package.json
   * index.html
 * package.json
 * .gitignore
-</pre>
+```
 
 ---
 
@@ -100,10 +101,10 @@ package.json
 You can configure Folder Tree in your `settings.json`:
 
 <pre>
-folderTree.overwriteExisting: boolean  
+folderTree.overwriteExisting: boolean
 // When true, existing files/folders with the same name will be overwritten. Default is false.
 
-folderTree.ignoreFileName: string  
+folderTree.ignoreFileName: string
 // Name of the structure file to ignore when generating folders. Default is ".tree".
 </pre>
 
@@ -111,11 +112,11 @@ folderTree.ignoreFileName: string
 
 ## 🧾 Release Notes
 
-### 1.0.0
+### 0.0.1
 
-- Initial release of **Folder Tree**
+- Initial release of **Generate Folder Tree**
 - Supports Markdown Tree, Indentation, and Bullet Point formats
-- Added command: `Folder Tree: Generate Structure`
+- Added command: `Generate Folder Tree: Create from Text Outline`
 
 ---
 
@@ -123,11 +124,11 @@ folderTree.ignoreFileName: string
 
 Have a feature idea or spotted a bug? We'd love your help!
 
-- 🐞 Report bugs by opening an [Issue](https://github.com/Suuraw/Folder-Tree/issues)
+- 🐞 Report bugs by opening an [Issue](https://github.com/Suuraw/Generate-Folder-Tree/issues)
 - 💡 Suggest features or improvements the same way
 - 🔧 Want to contribute? Fork the repo and submit a PR — clear commits and concise messages appreciated!
 
-Check the [Contribution Guide](https://github.com/Suuraw/Folder-Tree/blob/main/CONTRIBUTING.md).
+Check the [Contribution Guide](https://github.com/Suuraw/Generate-Folder-Tree/blob/main/CONTRIBUTING.md).
 
 ---
 

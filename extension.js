@@ -54,7 +54,7 @@ function showInputPanel(context) {
           console.log("Processing MD tree structure...");
           // When the run command is received, we close the panel and run the creation logic.
           handleMDTreeCreation(message.mdTree);
-          panel.dispose();
+          // panel.dispose();
           return;
 
         case "close":
@@ -137,7 +137,7 @@ function parseMDTree(mdTree) {
 
   // This regex greedily captures all prefix characters (whitespace, tree symbols)
   // in the first group, leaving the clean content in the second group.
-  const lineParser = /^([ │├└─\t\v\f\r\n\+*\d\.-]*)(.*)/;
+  const lineParser = /^([ |│├└─\t*+-]*)(.*)/;
   for (const line of lines) {
     const match = line.match(lineParser);
     if (!match) continue;
@@ -504,11 +504,15 @@ function getWebviewContent() {
                     <span><strong>1. Standard Tree Format:</strong></span>
                     <button class="copy-btn" data-target="format-code-1">Copy</button>
                 </h3>
-                <pre id="format-code-1">├── folder/
-│   ├── subfolder/
-│   │   └── file.txt
-│   └── another-file.js
-└── root-file.md</pre>
+                <pre id="format-code-1">
+.
+|-- src/
+|   |-- components/
+|   |   |-- Button.js
+|   |-- index.js
+|-- public/
+|-- .gitignore
+|-- package.json</pre>
                 
                 <h3>
                     <span><strong>2. Simple Indentation:</strong></span>
@@ -541,10 +545,10 @@ root-file.md</pre>
             
             <div class="button-group">
                 <button type="button" class="run-button" id="runButton">
-                    🚀 Create Structure
+                    Create Structure
                 </button>
                 <button type="button" class="close-button" id="closeButton">
-                    ❌ Close
+                    Close
                 </button>
             </div>
         </div>
