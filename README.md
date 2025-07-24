@@ -1,4 +1,4 @@
-# 📁 Folder Tree
+# 📁 Generate Folder Tree
 
 [![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/Suuraw.generate-folder-tree)](https://marketplace.visualstudio.com/items?itemName=Suuraw.generate-folder-tree)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -7,7 +7,7 @@
 > ✏️ Just **paste** or **draw your structure** in the panel  
 > ⚡️ Instantly create your entire project layout — no more clicking "New File" or "New Folder" again and again.
 
-![Demo of Folder Tree](https://raw.githubusercontent.com/Suuraw/Generate-Folder-Tree/main/images/Demo.gif)
+![Demo of Generate Folder Tree](https://raw.githubusercontent.com/Suuraw/Generate-Folder-Tree/main/images/Demo.gif)
 
 ---
 
@@ -26,7 +26,7 @@
 
 ## 🛠️ How to Use
 
-1. **Install** the "Folder Tree" extension from the [VS Code Marketplace](https://marketplace.visualstudio.com/).
+1. **Install** the "Generate Folder Tree" extension from the [VS Code Marketplace](https://marketplace.visualstudio.com/).
 2. **Create a new file** in your workspace root (e.g., `.tree`).
 3. **Define your structure** in one of the supported formats (see below).  
    ➤ To define a **folder**, end its name with a slash (`/`).
@@ -98,7 +98,7 @@ package.json
 
 ## ⚙️ Extension Settings
 
-You can configure Folder Tree in your `settings.json`:
+You can configure Generate Folder Tree in your `settings.json`:
 
 <pre>
 folderTree.overwriteExisting: boolean
